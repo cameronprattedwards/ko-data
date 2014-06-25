@@ -1,6 +1,8 @@
 define(["knockout", "./Type.js"], function (ko, Type) {
+	var date = new Date();
+
 	var DateType = Type.extend({
-		value: "",
+		value: date,
 		parse: function (input) {
 			return new Date(Date.parse(input));
 		},
@@ -13,7 +15,7 @@ define(["knockout", "./Type.js"], function (ko, Type) {
 		return new DateType(options);
 	}
 
-	output.value = new Date();
+	output.value = date;
 	output.getInstance = DateType.prototype.getInstance;
 	output.parse = DateType.prototype.parse;
 
