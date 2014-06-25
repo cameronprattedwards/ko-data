@@ -1,0 +1,27 @@
+{
+  "name": "ko-data",
+  "version": "0.0.0",
+  "homepage": "https://github.com/cameronprattedwards/ko-data",
+  "authors": [
+    "Cameron Edwards <cameronprattedwards@gmail.com>"
+  ],
+  "description": "A persistence and modelling library for Knockout apps",
+  "main": "test-main.js",
+  "dependencies": {
+    "knockout": "3.0.0"
+  },
+  "keywords": [
+    "ddd",
+    "modeling",
+    "repository",
+    "entity"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
