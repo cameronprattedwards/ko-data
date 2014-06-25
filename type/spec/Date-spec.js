@@ -1,4 +1,4 @@
-define(["../Date.js", "knockout"], function (DateType, ko) {
+define(["type/Date", "knockout"], function (DateType, ko) {
 	describe("Date", function () {
 		var dateType = DateType;
 

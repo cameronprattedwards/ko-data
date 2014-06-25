@@ -1,4 +1,4 @@
-define(["../object/Object.js", "knockout"], function (Object, ko) {
+define(["object/Object", "knockout", "type/dirtyCheck"], function (Object, ko) {
 	var Type = Object.extend({
 		init: function (options) {
 			for (var x in options) {
@@ -6,7 +6,7 @@ define(["../object/Object.js", "knockout"], function (Object, ko) {
 			}
 		},
 		getInstance: function () {
-			return ko.observable(this.value);
+			return ko.observable(this.value).extend({ dirtyCheck: true });
 		},
 		parse: function (input) {
 			return input;

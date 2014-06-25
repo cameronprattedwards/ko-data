@@ -1,4 +1,4 @@
-define(["../Boolean.js", "knockout"], function (Boolean, ko) {
+define(["type/Boolean", "knockout"], function (Boolean, ko) {
 	describe("Boolean", function () {
 		var boolType = Boolean;
 
@@ -15,6 +15,19 @@ define(["../Boolean.js", "knockout"], function (Boolean, ko) {
 
 			it("defaults to false", function () {
 				expect(ko.utils.unwrapObservable(boolType.getInstance())).toBe(false);
+			});
+
+			describe ("return value", function () {
+				it("tracks dirty state", function () {
+					var instance = boolType.getInstance();
+					expect(ko.isObservable(instance.isDirty)).toBe(true);
+					expect(instance.isDirty()).toBe(false);
+					instance(true);
+					expect(instance.isDirty()).toBe(true);
+
+					var instance2 = boolType.getInstance();
+					expect(instance.isDirty()).toBe(true);
+				});
 			});
 		});
 

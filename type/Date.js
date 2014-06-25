@@ -1,4 +1,4 @@
-define(["knockout", "./Type.js"], function (ko, Type) {
+define(["knockout", "type/Type", "type/dirtyCheck"], function (ko, Type) {
 	var date = new Date();
 
 	var DateType = Type.extend({
@@ -7,7 +7,7 @@ define(["knockout", "./Type.js"], function (ko, Type) {
 			return new Date(Date.parse(input));
 		},
 		getInstance: function () {
-			return ko.observable(new Date());
+			return ko.observable(new Date()).extend({ dirtyCheck: true });
 		}
 	});
 

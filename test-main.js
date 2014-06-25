@@ -1,6 +1,5 @@
 var tests = ['knockout'];
 for (var file in window.__karma__.files) {
-	console.log(file);
 	if (/spec\.js$/.test(file)) {
 	    tests.push(file);
 	    console.log("included", file);
@@ -15,3 +14,5 @@ require.config({
 	callback: window.__karma__.start,
 	baseUrl: '/base'
 });
+
+require([], function () {});

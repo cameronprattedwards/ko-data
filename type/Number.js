@@ -1,4 +1,4 @@
-define(["knockout", "./Type.js"], function (ko, Type) {
+define(["knockout", "type/Type"], function (ko, Type) {
 	var Number = Type.extend({
 		value: 0,
 		parse: function (input) {

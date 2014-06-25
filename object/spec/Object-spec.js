@@ -1,4 +1,4 @@
-define(["../Object.js"], function (Object) {
+define(["object/Object"], function (Object) {
 	describe("#extend()", function () {
 		//accepts a hash of properties
 		var Person = Object.extend({

@@ -1,4 +1,4 @@
-define(["../Number.js", "knockout"], function (Number, ko) {
+define(["type/Number", "knockout"], function (Number, ko) {
 	describe("Number", function () {
 		var numType = Number;
 
