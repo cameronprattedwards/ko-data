@@ -1,4 +1,4 @@
-define(["../Entity", "knockout", "type/Number", "type/Date", "type/String"], function (Entity, ko, Number, DateType, String) {
+define(["entity/Entity", "knockout", "type/Number", "type/Date", "type/String"], function (Entity, ko, Number, DateType, String) {
 	describe("Entity", function () {
 		var Person,
 			Student,
@@ -8,7 +8,7 @@ define(["../Entity", "knockout", "type/Number", "type/Date", "type/String"], fun
 			jess;
 
 		describe("#extend()", function () {
-			var Person = Entity.extend({
+			Person = Entity.extend({
 				speak: function (words) {
 					console.log(words);
 				},
@@ -38,7 +38,7 @@ define(["../Entity", "knockout", "type/Number", "type/Date", "type/String"], fun
 			});
 
 			it("passes properties down deep prototype chains", function () {
-				var Student = Person.extend({
+				Student = Person.extend({
 					grade: Number,
 					className: String(),
 					graduationDate: DateType
@@ -61,9 +61,9 @@ define(["../Entity", "knockout", "type/Number", "type/Date", "type/String"], fun
 			});
 
 			it("should have basic state properties", function () {
-				expect(ko.utils.isObservable(person.isLoading)).toBe(true);
-				expect(ko.utils.isObservable(person.isNew)).toBe(true);
-				expect(ko.utils.isObservable(person.isDirty)).toBe(true);
+				expect(ko.isObservable(person.isLoading)).toBe(true);
+				expect(ko.isObservable(person.isNew)).toBe(true);
+				expect(ko.isObservable(person.isDirty)).toBe(true);
 			});
 
 			it("should be set to correct state", function () {
@@ -73,12 +73,12 @@ define(["../Entity", "knockout", "type/Number", "type/Date", "type/String"], fun
 			});
 
 			it("sets instances of properties on itself", function () {
-				expect(ko.utils.isObservable(student.age)).toBe(true);
-				expect(ko.utils.isObservable(student.birthday)).toBe(true);
-				expect(ko.utils.isObservable(student.name)).toBe(true);
-				expect(ko.utils.isObservable(student.grade)).toBe(true);
-				expect(ko.utils.isObservable(student.className)).toBe(true);
-				expect(ko.utils.isObservable(student.graduationDate)).toBe(true);
+				expect(ko.isObservable(student.age)).toBe(true);
+				expect(ko.isObservable(student.birthday)).toBe(true);
+				expect(ko.isObservable(student.name)).toBe(true);
+				expect(ko.isObservable(student.grade)).toBe(true);
+				expect(ko.isObservable(student.className)).toBe(true);
+				expect(ko.isObservable(student.graduationDate)).toBe(true);
 
 				expect(student.age()).toBe(0);
 				expect(student.birthday() instanceof Date).toBe(true);
