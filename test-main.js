@@ -1,7 +1,7 @@
-var tests = [];
+var tests = ['knockout'];
 for (var file in window.__karma__.files) {
 	console.log(file);
-	if (/test\.js$/.test(file)) {
+	if (/spec\.js$/.test(file)) {
 	    tests.push(file);
 	    console.log("included", file);
 	}
@@ -9,5 +9,9 @@ for (var file in window.__karma__.files) {
 
 require.config({
 	deps: tests,
-	callback: window.__karma__.start
+	paths: {
+		'knockout': 'lib/knockout-3.1.0'
+	},
+	callback: window.__karma__.start,
+	baseUrl: '/base'
 });

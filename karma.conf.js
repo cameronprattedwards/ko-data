@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      {pattern: 'lib/knockout-3.1.0.js', included: false},
       {pattern: 'test-main.js', included: true},
       {pattern: '**/*.js', included: false},
       {pattern: '**/spec/*.js', included: false}
