@@ -37,6 +37,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						params[x] = entity.properties[x].serialize(entity[x]());
 				}
 
+				entity.isLoading(true);
+
 				$.ajax({
 					url: _self.makeUrl(entity),
 					type: method,
@@ -61,6 +63,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 
 						Morpheus.markDirty = false;
 						entity.set(setData);
+						entity.isLoading(false);
 						entity.markClean();
 						Morpheus.markDirty = true;
 						def.resolve();
