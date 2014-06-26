@@ -8,6 +8,9 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 		},
 		getInstance: function () {
 			return ko.observable(new Date()).extend({ dirtyCheck: true });
+		},
+		serialize: function (input) {
+			return input.toString();
 		}
 	});
 

@@ -10,6 +10,9 @@ define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck"], functio
 		},
 		parse: function (input) {
 			return input;
+		},
+		serialize: function (value) {
+			return value;
 		}
 	});
 

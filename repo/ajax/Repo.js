@@ -30,7 +30,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 					params = {};
 
 				for (var x in entity.properties) {
-					params[x] = ko.toJS(entity[x]);
+					params[x] = entity.properties[x].serialize(entity[x]);
 				}
 
 				$.ajax({
@@ -95,7 +95,13 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 					Morpheus.markNew = false;
 
 					parsedData.forEach(function (data) {
-						var grocked = new _self.entity(data);
+						var setData = {};
+						var props = _self.entity.prototype.properties;
+						for (var x in props) {
+							if (data[x])
+								setData[x] = props[x].parse(data[x]);
+						}
+						var grocked = new _self.entity(setData);
 						grocked.markClean();
 						output.push(grocked);
 					});
