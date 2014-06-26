@@ -2,7 +2,10 @@ define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	var Boolean = Type.extend({
 		value: 0,
 		parse: function (input) {
-			return input.toLowerCase() === "true" ? true : false;
+			if (typeof input == "string")
+				return input.toLowerCase() === "true" ? true : false;
+			else
+				return !(!input);
 		}
 	});
 
