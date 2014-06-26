@@ -9,7 +9,13 @@ for (var file in window.__karma__.files) {
 require.config({
 	deps: tests,
 	paths: {
-		'knockout': 'lib/knockout-3.1.0'
+		'knockout': 'lib/knockout-3.1.0',
+		'jquery': 'lib/jquery-2.1.1.min.js'
+	},
+	shim: {
+		'jquery': {
+			exports: '$'
+		}
 	},
 	callback: window.__karma__.start,
 	baseUrl: '/base'
