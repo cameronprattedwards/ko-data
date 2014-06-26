@@ -10,7 +10,8 @@ require.config({
 	deps: tests,
 	paths: {
 		'knockout': 'lib/knockout-3.1.0',
-		'jquery': 'lib/jquery-2.1.1.min.js'
+		'jquery': 'lib/jquery-2.1.1.min.js',
+		'ko-data': '.'
 	},
 	shim: {
 		'jquery': {

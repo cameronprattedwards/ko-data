@@ -17,6 +17,8 @@ module.exports = function(config) {
       {pattern: 'lib/knockout-3.1.0.js', included: false},
       {pattern: 'test-main.js', included: true},
       {pattern: '**/*.js', included: false},
+      {pattern: 'repo/**/*.js', included: false},
+      {pattern: 'repo/**/spec/*.js', included: false},
       {pattern: '**/spec/*.js', included: false}
     ],
 

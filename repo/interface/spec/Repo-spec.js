@@ -8,7 +8,11 @@ define(["ko-data/repo/interface/Repo", "ko-data/entity/Entity", "ko-data/type/Nu
 			name: String
 		});
 
-		var personRepo = new (Repo(Person))();
+		var PersonRepo = Repo.extend({
+			entity: Person
+		});
+
+		var personRepo = new PersonRepo();
 
 		describe("add", function () {
 			it("adds entities to the repo", function () {
