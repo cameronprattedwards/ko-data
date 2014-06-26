@@ -25,6 +25,9 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 				_self = this;
 
 			this.staging.forEach(function (entity) {
+				if (!entity.isNew() && !entity.isDirty())
+					continue;
+				
 				var method = entity.isNew() ? "POST" : "PUT",
 					def = deferred(),
 					params = {};
