@@ -10,7 +10,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 			return ko.observable(new Date()).extend({ dirtyCheck: true });
 		},
 		serialize: function (input) {
-			return input.toString();
+			return input.toISOString();
 		}
 	});
 
