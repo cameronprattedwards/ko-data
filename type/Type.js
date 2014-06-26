@@ -18,6 +18,7 @@ define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck"], functio
 
 	Type.getInstance = Type.prototype.getInstance;
 	Type.parse = Type.prototype.parse;
+	Type.serialize = Type.prototype.serialize;
 
 	return Type;
 });

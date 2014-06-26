@@ -13,6 +13,7 @@ define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	output.value = false;
 	output.getInstance = Boolean.prototype.getInstance;
 	output.parse = Boolean.prototype.parse;
+	output.serialize = Boolean.prototype.serialize;
 
 	return output;
 });

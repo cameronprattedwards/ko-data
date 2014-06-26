@@ -21,6 +21,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 	output.value = date;
 	output.getInstance = DateType.prototype.getInstance;
 	output.parse = DateType.prototype.parse;
+	output.serialize = DateType.prototype.serialize;
 
 	return output;
 });
