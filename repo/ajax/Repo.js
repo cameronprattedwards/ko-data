@@ -30,7 +30,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 					params = {};
 
 				for (var x in entity.properties) {
-					params[x] = entity.properties[x].serialize(entity[x]());
+					if (entity.isNew() || entity[x].isDirty())
+						params[x] = entity.properties[x].serialize(entity[x]());
 				}
 
 				$.ajax({
