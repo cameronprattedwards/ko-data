@@ -1,4 +1,4 @@
-define(["knockout", "type/Type"], function (ko, Type) {
+define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	var String = Type.extend({
 		value: "",
 		parse: function (input) {

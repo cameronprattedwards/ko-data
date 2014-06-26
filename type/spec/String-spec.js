@@ -1,4 +1,4 @@
-define(["type/String", "knockout"], function (String, ko) {
+define(["ko-data/type/String", "knockout"], function (String, ko) {
 	describe("String", function () {
 		var stringType = String;
 

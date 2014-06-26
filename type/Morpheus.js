@@ -1,5 +1,6 @@
 define([], function () {
 	return {
-		makeDirty: true
+		markDirty: true,
+		markNew: true
 	};
 });

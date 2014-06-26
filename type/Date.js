@@ -1,4 +1,4 @@
-define(["knockout", "type/Type", "type/dirtyCheck"], function (ko, Type) {
+define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (ko, Type) {
 	var date = new Date();
 
 	var DateType = Type.extend({

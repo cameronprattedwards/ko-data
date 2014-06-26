@@ -1,4 +1,4 @@
-define(["object/Object", "knockout", "type/dirtyCheck"], function (Object, ko) {
+define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck"], function (Object, ko) {
 	var Type = Object.extend({
 		init: function (options) {
 			for (var x in options) {

@@ -1,4 +1,4 @@
-define(["type/Boolean", "knockout"], function (Boolean, ko) {
+define(["ko-data/type/Boolean", "knockout"], function (Boolean, ko) {
 	describe("Boolean", function () {
 		var boolType = Boolean;
 
