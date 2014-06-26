@@ -1,4 +1,4 @@
-define(["entity/Entity", "knockout", "type/Number", "type/Date", "type/String"], function (Entity, ko, Number, DateType, String) {
+define(["ko-data/entity/Entity", "knockout", "ko-data/type/Number", "ko-data/type/Date", "ko-data/type/String"], function (Entity, ko, Number, DateType, String) {
 	describe("Entity", function () {
 		var Person,
 			Student,
@@ -18,7 +18,9 @@ define(["entity/Entity", "knockout", "type/Number", "type/Date", "type/String"],
 				species: "homo sapiens",
 				age: Number(),
 				birthday: DateType,
-				name: String
+				name: String,
+				id: Number(),
+				uniqKey: "id"
 			});
 
 			person = new Person();
@@ -56,6 +58,36 @@ define(["entity/Entity", "knockout", "type/Number", "type/Date", "type/String"],
 		});
 
 		describe("new()", function () {
+			it("should enforce uniqueness between entities", function () {
+				var person1 = new Person({
+					id: 1,
+					name: "Cameron",
+					age: 26
+				});
+
+				var person2 = new Person({
+					id: 1,
+					name: "John",
+					age: 25
+				});
+
+				expect(person1).toBe(person2);
+
+				var person3 = new Person({
+					id: 2,
+					name: "Yitz",
+					age: 30
+				});
+
+				var person4 = new Person({
+					id: 3,
+					name: "Pream",
+					age: 25
+				});
+
+				expect(person3).not.toBe(person4);
+			});
+
 			it("should contain a .properties hash", function () {
 				expect(typeof person.properties).toBe("object");
 			});

@@ -1,4 +1,4 @@
-define(["knockout", "type/Morpheus"], function (ko, Morpheus) {
+define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 	/* Simple JavaScript Inheritance
 	* By John Resig http://ejohn.org/
 	* MIT Licensed.
@@ -13,9 +13,13 @@ define(["knockout", "type/Morpheus"], function (ko, Morpheus) {
 	Entity.prototype = {
 		properties: {},
 		init: function (hash) {
+			var _self = this;
 			Morpheus.markDirty = false;
 			for (var x in this.properties) {
 				this[x] = this.properties[x].getInstance();
+				this[x].isDirty.subscribe(function () {
+					_self.isDirty(true);
+				});
 			}
 
 			for (var x in hash) {
@@ -28,8 +32,28 @@ define(["knockout", "type/Morpheus"], function (ko, Morpheus) {
 
 			this.isLoading = ko.observable(false);
 			this.isDirty = ko.observable(false);
-			this.isNew = ko.observable(true);
+			this.isNew = ko.observable(Morpheus.markNew);
 			Morpheus.markDirty = true;
+
+			if (this.uniqKey && (!hash || !hash[this.uniqKey])) {
+				this[this.uniqKey].subscribe(function (value) {
+					_self.instances[_self.uniqKey] = _self;
+				});
+			}
+		},
+		markClean: function () {
+			for (var x in this.properties) {
+				this[x].isDirty(false);
+				this.isDirty(false);
+				this.isNew(false);
+			}
+		},
+		set: function (hash) {
+			for (var x in hash) {
+				if (this.properties[x]) {
+					this[x](hash[x]);
+				}
+			}
 		}
 	};
 
@@ -74,11 +98,20 @@ define(["knockout", "type/Morpheus"], function (ko, Morpheus) {
 					prop[name];
 		}
 
+		prototype.instances = {};
+
 		// The dummy entity constructor
-		function Entity() {
+		function Entity(hash) {
 			// All construction is actually done in the init method
-			if ( !initializing )
+			if ( !initializing ) {
+				if (hash && this.uniqKey)
+					if (this.instances[hash[this.uniqKey]])
+						return this.instances[hash[this.uniqKey]]
+					else
+						this.instances[hash[this.uniqKey]] = this;
+
 				this.init.apply(this, arguments);
+			}
 		}
 
 		// Populate our constructed prototype object
