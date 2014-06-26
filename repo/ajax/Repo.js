@@ -59,7 +59,6 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						entity.set(setData);
 						entity.markClean();
 						Morpheus.markDirty = true;
-						_self.staging.splice(_self.staging.indexOf(entity), 1);
 						def.resolve();
 					},
 					error: function (jqXHR, testStatus, errorThrown) {
@@ -102,6 +101,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 								setData[x] = props[x].parse(data[x]);
 						}
 						var grocked = new _self.entity(setData);
+						_self.add(grocked);
 						grocked.markClean();
 						output.push(grocked);
 					});
@@ -122,3 +122,20 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 		}
 	});
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
