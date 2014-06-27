@@ -1,7 +1,7 @@
 ko-data
 =======
 
-Tools for your persistence and domain layers in Knockout. Depends on Knockout and RequireJS. If you're using the AJAX repository, it currently depends on jQuery.
+Tools for your persistence and domain layers in Knockout. If you'd like a primer on Knockout, [this video](https://www.youtube.com/watch?v=AQbdDLweGxQ) is a great place to start. Ko-data depends on Knockout and RequireJS. If you're using the AJAX repository, it currently depends on jQuery.
 
 To define an entity, simply do this:
 
