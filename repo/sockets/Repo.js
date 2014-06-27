@@ -37,8 +37,8 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], fu
 					fits = true;
 				
 				for (var x in props) {
-					if (x in data)
-						setData[x] = props[x].parse(data[x]);
+					if (x in obj)
+						setData[x] = props[x].parse(obj[x]);
 				}
 
 				var grocked = new _self.entity(setData);
