@@ -104,14 +104,16 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 		function Entity(hash) {
 			// All construction is actually done in the init method
 			if ( !initializing ) {
-				if (hash && this.uniqKey)
-					if (this.instances[hash[this.uniqKey]]) {
-						if (Morpheus.markDirty || !this.isDirty())
-							this.instances[hash[this.uniqKey]].set(hash);
-						return this.instances[hash[this.uniqKey]]
+				if (hash && this.uniqKey) {
+					var instance;
+					if (instance = this.instances[hash[this.uniqKey]]) {
+						if (Morpheus.markDirty || !instance.isDirty())
+							instance.set(hash);
+						return instance;
 					} else {
 						this.instances[hash[this.uniqKey]] = this;
 					}
+				}
 
 				this.init.apply(this, arguments);
 			}
