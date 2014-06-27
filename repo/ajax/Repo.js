@@ -129,8 +129,10 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						gotten = output();
 
 						for (var i = 0; i < gotten.length; i++) {
-							if (comparer.indexOf(gotten[i]) == -1 && !gotten[i].isNew())
+							if (comparer.indexOf(gotten[i]) == -1 && !gotten[i].isNew()) {
 								output.remove(gotten[i]);
+								delete gotten[i].instances[gotten[i][gotten[i].uniqKey]()];
+							}
 						}
 
 						def.resolve(output);
