@@ -1,4 +1,4 @@
-define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], function (ExtensibleObject, ko, io, deferred) {
+define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko-data/type/Morpheus"], function (ExtensibleObject, ko, io, deferred, Morpheus) {
 	function DataSet(filters) {
 		this.filters = [];
 		this.collection = ko.observableArray();
@@ -41,7 +41,9 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], fu
 						setData[x] = props[x].parse(obj[x]);
 				}
 
+				Morpheus.markDirty = false;
 				var grocked = new _self.entity(setData);
+				Morpheus.markDirty = true;
 				_self.add(grocked);
 				grocked.markClean();
 
@@ -57,8 +59,10 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], fu
 					if (props[x])
 						obj[x] = props[x].parse(obj[x]);
 				}
-
-				new _self.entity(obj);
+				Morpheus.markDirty = false;
+				var entity = new _self.entity(obj);
+				entity.markClean();
+				Morpheus.markDirty = true;
 			});
 
 			this.socket.on(this.entityName + " removed", function (id) {
