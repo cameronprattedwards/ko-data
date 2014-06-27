@@ -129,7 +129,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						gotten = output();
 
 						for (var i = 0; i < gotten.length; i++) {
-							if (comparer.indexOf(gotten) == -1)
+							if (comparer.indexOf(gotten[i]) == -1)
 								output.remove(gotten[i]);
 						}
 
