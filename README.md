@@ -75,6 +75,7 @@ Some gotchas:
 1. It currently handles only shallow entities - no entities within entities.
 
 To come:
+
 1. Custom types
 1. Web sockets repo
 1. Entities within entities
