@@ -178,6 +178,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						return;
 					}
 
+					delete entity.instances[entity[entity.uniqKey]()];
+
 					def.resolve();
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
