@@ -39,7 +39,7 @@ define(["ko-data/object/Object", "ko-data/utils/deferred"], function (Object, de
 			}
 
 			return deferred().resolve().promise();
-		}
+		},
 		entity: Object
 	});
 });

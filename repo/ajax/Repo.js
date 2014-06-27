@@ -164,7 +164,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 				_self = this;
 
 			if (entity.isNew())
-				return deferred.reject(new Error("Entity has not yet been persisted.")).promise();
+				return deferred().reject(new Error("Entity has not yet been persisted.")).promise();
 
 			index = this.staging.indexOf(entity);
 			def = deferred();
