@@ -63,13 +63,15 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 
 						Morpheus.markDirty = false;
 						entity.set(setData);
-						entity.isLoading(false);
 						entity.markClean();
 						Morpheus.markDirty = true;
 						def.resolve();
 					},
 					error: function (jqXHR, testStatus, errorThrown) {
 						def.reject(errorThrown);
+					},
+					always: function () {
+						entity.isLoading(false);
 					}
 				});
 
@@ -141,6 +143,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 			if (index !== -1)
 				this.staging.splice(index, 1);
 
+			entity.isLoading(true);
+
 			$.ajax({
 				url: this.makeUrl(entity),
 				type: "DELETE",
@@ -157,6 +161,9 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					def.reject(errorThrown);
+				},
+				always: function () {
+					entity.isLoading(false);
 				}
 			});
 
