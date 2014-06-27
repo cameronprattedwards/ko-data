@@ -118,8 +118,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 							var grocked = new _self.entity(setData);
 							_self.add(grocked);
 							grocked.markClean();
-							if (output.indexOf(grocked) == -1)
-								output.push(grocked);
+							output.remove(grocked);
+							output.push(grocked);
 							comparer.push(grocked);
 						});
 
