@@ -48,7 +48,7 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko
 				grocked.markClean();
 
 				_self.dataSets.forEach(function (dataSet) {
-					if (dataSet.check(grocked) && dataSet.indexOf(grocked) == -1)
+					if (dataSet.check(grocked) && dataSet.collection.indexOf(grocked) == -1)
 						dataSet.collection.push(grocked);
 				});
 			});
