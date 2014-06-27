@@ -129,7 +129,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 		},
 		remove: function (entity) {
 			var index,
-				def;
+				def,
+				_self = this;
 
 			if (entity.isNew())
 				return deferred.reject(new Error("Entity has not yet been persisted.")).promise();
