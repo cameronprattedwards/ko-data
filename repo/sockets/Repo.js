@@ -83,7 +83,7 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], fu
 				}
 
 				if (entity.isDirty()) {
-					_self.socket.emit(_self.entityName + " updated: ", params);
+					_self.socket.emit(_self.entityName + " updated", params);
 				}
 
 				if (entity.isNew()) {
