@@ -1,4 +1,4 @@
-require(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], function (ExtensibleObject, ko, io, deferred) {
+define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], function (ExtensibleObject, ko, io, deferred) {
 	function DataSet(filters) {
 		this.filters = [];
 		this.collection = ko.observableArray();
