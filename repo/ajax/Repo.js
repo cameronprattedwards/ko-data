@@ -72,7 +72,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 					error: function (jqXHR, testStatus, errorThrown) {
 						def.reject(errorThrown);
 					},
-					always: function () {
+					complete: function () {
 						entity.isLoading(false);
 					}
 				});
@@ -183,7 +183,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 				error: function (jqXHR, textStatus, errorThrown) {
 					def.reject(errorThrown);
 				},
-				always: function () {
+				complete: function () {
 					entity.isLoading(false);
 				}
 			});
