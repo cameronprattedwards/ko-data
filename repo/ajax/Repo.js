@@ -112,7 +112,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 							var setData = {};
 							var props = _self.entity.prototype.properties;
 							for (var x in props) {
-								if (data[x])
+								if (x in data)
 									setData[x] = props[x].parse(data[x]);
 							}
 							var grocked = new _self.entity(setData);
