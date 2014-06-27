@@ -44,9 +44,9 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 		markClean: function () {
 			for (var x in this.properties) {
 				this[x].isDirty(false);
-				this.isDirty(false);
-				this.isNew(false);
 			}
+			this.isDirty(false);
+			this.isNew(false);
 		},
 		set: function (hash) {
 			for (var x in hash) {
@@ -104,11 +104,16 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 		function Entity(hash) {
 			// All construction is actually done in the init method
 			if ( !initializing ) {
-				if (hash && this.uniqKey)
-					if (this.instances[hash[this.uniqKey]])
-						return this.instances[hash[this.uniqKey]]
-					else
+				if (hash && this.uniqKey) {
+					var instance;
+					if (instance = this.instances[hash[this.uniqKey]]) {
+						if (Morpheus.markDirty || !instance.isDirty())
+							instance.set(hash);
+						return instance;
+					} else {
 						this.instances[hash[this.uniqKey]] = this;
+					}
+				}
 
 				this.init.apply(this, arguments);
 			}

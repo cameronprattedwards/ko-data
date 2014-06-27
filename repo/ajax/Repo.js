@@ -72,7 +72,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 					error: function (jqXHR, testStatus, errorThrown) {
 						def.reject(errorThrown);
 					},
-					always: function () {
+					complete: function () {
 						entity.isLoading(false);
 					}
 				});
@@ -108,18 +108,20 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						Morpheus.markDirty = false;
 						Morpheus.markNew = false;
 
-						parsedData.forEach(function (data) {
+						parsedData.forEach(function (data, i) {
 							var setData = {};
 							var props = _self.entity.prototype.properties;
 							for (var x in props) {
-								if (data[x])
+								if (x in data)
 									setData[x] = props[x].parse(data[x]);
 							}
 							var grocked = new _self.entity(setData);
 							_self.add(grocked);
 							grocked.markClean();
-							if (output.indexOf(grocked) == -1)
-								output.push(grocked);
+							if (output()[i] !== grocked) {
+								output.remove(grocked);
+								output.splice(i, 0, grocked);
+							}
 							comparer.push(grocked);
 						});
 
@@ -129,8 +131,14 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						gotten = output();
 
 						for (var i = 0; i < gotten.length; i++) {
-							if (comparer.indexOf(gotten[i]) == -1)
-								output.remove(gotten[i]);
+							if (comparer.indexOf(gotten[i]) == -1 && !gotten[i].isNew()) {
+								try {
+									delete gotten[i].instances[gotten[i][gotten[i].uniqKey]()];
+									output.remove(gotten[i]);
+								} catch (e) {
+									throw e;
+								}
+							}
 						}
 
 						def.resolve(output);
@@ -178,12 +186,14 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						return;
 					}
 
+					delete entity.instances[entity[entity.uniqKey]()];
+
 					def.resolve();
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					def.reject(errorThrown);
 				},
-				always: function () {
+				complete: function () {
 					entity.isLoading(false);
 				}
 			});
