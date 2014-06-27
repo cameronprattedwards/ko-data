@@ -37,7 +37,10 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 
 			if (this.uniqKey && (!hash || !hash[this.uniqKey])) {
 				this[this.uniqKey].subscribe(function (value) {
-					_self.instances[_self.uniqKey] = _self;
+					if (_self.instances[value]) {
+						throw new Error("looks like you've got a duplicate ID.");
+					}
+					_self.instances[value] = _self;
 				});
 			}
 		},
