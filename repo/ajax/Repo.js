@@ -6,6 +6,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 		pluralEntityName: "objects",
 		fileExtension: "",
 		entity: Object,
+		poll: false,
+		pollBuffer: 1000,
 		init: function () {
 			this.staging = [];
 		},
@@ -93,38 +95,57 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 				params[predicate.field] = predicate.comparator;
 			}
 
-			$.ajax({
-				url: _self.makeUrl(),
-				data: params,
-				dataType: this.dataType,
-				success: function (payload) {
-					var parsedData = _self.payloadParser(payload);
-					Morpheus.markDirty = false;
-					Morpheus.markNew = false;
+			function request() {
+				$.ajax({
+					url: _self.makeUrl(),
+					data: params,
+					dataType: _self.dataType,
+					success: function (payload) {
+						var parsedData = _self.payloadParser(payload),
+							comparer = [],
+							gotten;
 
-					parsedData.forEach(function (data) {
-						var setData = {};
-						var props = _self.entity.prototype.properties;
-						for (var x in props) {
-							if (data[x])
-								setData[x] = props[x].parse(data[x]);
+						Morpheus.markDirty = false;
+						Morpheus.markNew = false;
+
+						parsedData.forEach(function (data) {
+							var setData = {};
+							var props = _self.entity.prototype.properties;
+							for (var x in props) {
+								if (data[x])
+									setData[x] = props[x].parse(data[x]);
+							}
+							var grocked = new _self.entity(setData);
+							_self.add(grocked);
+							grocked.markClean();
+							if (output.indexOf(grocked) == -1)
+								output.push(grocked);
+							comparer.push(grocked);
+						});
+
+						Morpheus.markDirty = true;
+						Morpheus.markNew = true;
+
+						gotten = output();
+
+						for (var i = 0; i < gotten.length; i++) {
+							if (comparer.indexOf(gotten) == -1)
+								output.remove(gotten[i]);
 						}
-						var grocked = new _self.entity(setData);
-						_self.add(grocked);
-						grocked.markClean();
-						output.push(grocked);
-					});
 
-					Morpheus.markDirty = true;
-					Morpheus.markNew = true;
+						def.resolve(output);
 
-					def.resolve(output);
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					def.reject(errorThrown);
-				},
-				type: "GET"
-			});
+						if (_self.poll)
+							window.setTimeout(request, _self.pollBuffer);
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						def.reject(errorThrown);
+					},
+					type: "GET"
+				});
+			}
+
+			request();
 
 			output.promise = def.promise();
 			return output;
