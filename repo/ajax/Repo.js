@@ -1,5 +1,5 @@
 define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/type/Morpheus", "knockout", "ko-data/utils/stackedPromise"], function ($, deferred, ExtensibleObject, Morpheus, ko, stackedPromise) {
-	return ExtensibleObject.extend({
+	var SocketsRepo = ExtensibleObject.extend({
 		dataType: "json",
 		baseUrl: "",
 		entityName: "object",
@@ -201,6 +201,8 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 			return def.promise();
 		}
 	});
+
+	return SocketsRepo;
 });
 
 
