@@ -108,7 +108,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						Morpheus.markDirty = false;
 						Morpheus.markNew = false;
 
-						parsedData.forEach(function (data) {
+						parsedData.forEach(function (data, i) {
 							var setData = {};
 							var props = _self.entity.prototype.properties;
 							for (var x in props) {
@@ -118,8 +118,10 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 							var grocked = new _self.entity(setData);
 							_self.add(grocked);
 							grocked.markClean();
-							output.remove(grocked);
-							output.push(grocked);
+							if (output()[i] !== grocked) {
+								output.remove(grocked);
+								output.splice(i, 0, grocked);
+							}
 							comparer.push(grocked);
 						});
 
