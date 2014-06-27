@@ -71,7 +71,7 @@ The real genius of ko-data is simply that it handles AJAX response parsing decla
 
 Some gotchas:
 
-1. Make sure you define RequireJS with keys of "ko-data", "knockout", and "jquery", mapping to your respective ko-data, knockout, and jquery lib files.
+1. Make sure you define RequireJS paths with keys of "ko-data", "knockout", and "jquery", mapping to your respective ko-data, knockout, and jquery lib files.
 1. It currently handles only shallow entities - no entities within entities.
 
 To come:
