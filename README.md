@@ -22,7 +22,7 @@ define("Person", ["ko-data/entity/Entity", "ko-data/type/String", "ko-data/type/
 });
 ```
 
-To define an entity, simply do this:
+To define an repository, simply do this:
 
 ```
 define("PersonRepo", ["Person", "ko-data/repo/ajax/Repo"], function (Person, Repo) {
@@ -79,4 +79,4 @@ To come:
 1. Web sockets repo
 1. Entities within entities
 
-To see how it works, check out the []
+To see how it works, check out the proverbial example app [here](https://github.com/cameronprattedwards/ko-data-todo).
