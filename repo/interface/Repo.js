@@ -23,6 +23,23 @@ define(["ko-data/object/Object", "ko-data/utils/deferred"], function (Object, de
 
 			return deferred().resolve(output).promise();
 		},
+		remove: function (entity) {
+			var index;
+
+			index = this.instances.indexOf(entity);
+
+			if (index !== -1) {
+				this.instances.splice(index, 1);
+			}
+
+			index = this.staging.indexOf(entity);
+
+			if (index !== -1) {
+				this.staging.splice(index, 1);
+			}
+
+			return deferred().resolve().promise();
+		}
 		entity: Object
 	});
 });

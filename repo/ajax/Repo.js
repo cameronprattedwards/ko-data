@@ -126,6 +126,40 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 
 			output.promise = def.promise();
 			return output;
+		},
+		remove: function (entity) {
+			var index,
+				def;
+
+			if (entity.isNew())
+				return deferred.reject(new Error("Entity has not yet been persisted.")).promise();
+
+			index = this.staging.indexOf(entity);
+			def = deferred();
+
+			if (index !== -1)
+				this.staging.splice(index, 1);
+
+			$.ajax({
+				url: this.makeUrl(entity),
+				type: "DELETE",
+				dataType: "json",
+				success: function (payload) {
+					try {
+						parsed = _self.payloadParser(payload);
+					} catch (e) {
+						def.reject(e);
+						return;
+					}
+
+					def.resolve();
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					def.reject(errorThrown);
+				}
+			});
+
+			return def.promise();
 		}
 	});
 });
