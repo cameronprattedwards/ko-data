@@ -31,7 +31,14 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko
 			this.staging = [];
 			this.dataSets = [];
 			this.socket = io();
+			this.lastAdded = null;
 			this.socket.on(this.entityName + " added", function (obj) {
+				if (_self.lastAdded) {
+					_self.lastAdded[_self.lastAdded.uniqKey](obj[_self.lastAdded.uniqKey]);
+					_self.lastAdded = null;
+					return;
+				}
+
 				var setData = {},
 					props = _self.entity.prototype.properties,
 					fits = true;
@@ -93,6 +100,7 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko
 				}
 
 				if (entity.isNew()) {
+					_self.lastAdded = entity;
 					_self.socket.emit(_self.entityName + " added", params);
 				} else if (entity.isDirty()) {
 					_self.socket.emit(_self.entityName + " updated", params);
