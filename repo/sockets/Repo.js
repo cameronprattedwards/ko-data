@@ -52,6 +52,12 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], fu
 			});
 
 			this.socket.on(this.entityName + " updated", function (obj) {
+				var props = _self.entity.prototype.properties;
+				for (var x in obj) {
+					if (props[x])
+						obj[x] = props[x].parse(obj[x]);
+				}
+
 				new _self.entity(obj);
 			});
 
@@ -89,6 +95,8 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred"], fu
 				if (entity.isNew()) {
 					_self.socket.emit(_self.entityName + " added", params);
 				}
+
+				entity.markClean();
 			});
 
 			return deferred().resolve().promise();
