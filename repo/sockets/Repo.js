@@ -73,7 +73,7 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko
 			});
 
 			this.socket.on(this.entityName + " removed", function (id) {
-				var entity = _self.entity.instances[id];
+				var entity = _self.entity.prototype.instances[id];
 
 				_self.dataSets.forEach(function (dataSet) {
 					dataSet.collection.remove(entity);
