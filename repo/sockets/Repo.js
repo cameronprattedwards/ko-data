@@ -92,12 +92,10 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko
 						params[x] = entity.properties[x].serialize(entity[x]());
 				}
 
-				if (entity.isDirty()) {
-					_self.socket.emit(_self.entityName + " updated", params);
-				}
-
 				if (entity.isNew()) {
 					_self.socket.emit(_self.entityName + " added", params);
+				} else if (entity.isDirty()) {
+					_self.socket.emit(_self.entityName + " updated", params);
 				}
 
 				entity.markClean();
