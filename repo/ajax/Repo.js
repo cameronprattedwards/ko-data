@@ -1,5 +1,11 @@
-define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/type/Morpheus", "knockout", "ko-data/utils/stackedPromise"], function ($, deferred, ExtensibleObject, Morpheus, ko, stackedPromise) {
-	var SocketsRepo = ExtensibleObject.extend({
+define(["jquery", 
+	"ko-data/utils/deferred", 
+	"ko-data/object/Object", 
+	"ko-data/type/Morpheus", 
+	"knockout", 
+	"ko-data/utils/stackedPromise",
+	"ko-data/utils/function"], function ($, deferred, ExtensibleObject, Morpheus, ko, stackedPromise, f) {
+	var AjaxRepo = ExtensibleObject.extend({
 		dataType: "json",
 		baseUrl: "",
 		entityName: "object",
@@ -10,6 +16,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 		pollBuffer: 1000,
 		init: function () {
 			this.staging = [];
+			this.graph = {};
 		},
 		payloadParser: function (payload) {
 			return payload;
@@ -19,12 +26,41 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 				this.staging.push(entity);
 		},
 		makeUrl: function (entity) {
-			return this.baseUrl + "/" + this.pluralEntityName + ((entity && !entity.isNew()) ? ("/" + entity[entity.uniqKey]()) : "") + this.fileExtension;
+			var ending = this.pluralEntityName + ((entity && !entity.isNew()) ? ("/" + entity[entity.uniqKey]()) : "") + this.fileExtension;
+
+			if (this.belongsTo && entity.parent) {
+				var parentId = entity.parent[entity.parent.uniqKey]();
+				return this.baseUrl + "/" + this.belongsTo.pluralEntityName + "/" + parentId + "/" + ending;
+			} else {
+				return this.baseUrl + "/" + ending;
+			}
 		},
-		save: function () {
+		setRepo: function (prop, x) {
+			if (this.has.indexOf(props.entity) !== -1) {
+				this.graph[x] = prop;
+				for (var i = 0; i < _self.repos.length; i++) {
+					var repo = _self.repos[i];
+
+					if (repo.entity === prop.entity) {
+						prop.repo = repo;
+						return;
+					}
+				}
+
+				throw new Error("No repository has been created for entity.");
+			}
+		},
+		buildGraph: f.once(function () {
+			for (var x in props) {
+				this.setRepo(props[x]);
+			}
+		}),
+		save: function (parentId) {
 			var entity,
 				promises = [],
 				_self = this;
+
+			this.buildGraph();
 
 			this.staging.forEach(function (entity) {
 				if (!entity.isNew() && !entity.isDirty())
@@ -68,6 +104,28 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 						entity.markClean();
 						Morpheus.markDirty = true;
 						def.resolve();
+
+						var promises = [];
+						for (var x in _self.graph) {
+							var rendered = _self[x](),
+								repo = _self.graph[x].repo;
+
+							if (rendered instanceof Array) {
+								for (var i = 0; i < rendered.length; i++) {
+									rendered[i].parent = _self;
+									repo.add(rendered[i]);
+								}
+							} else {
+								rendered.parent = _self;
+								repo.add(rendered);
+							}
+
+							promises.push(repo.save());
+						}
+
+						stackedPromise(promises)
+							.done(def.resolve)
+							.fail(def.reject);
 					},
 					error: function (jqXHR, testStatus, errorThrown) {
 						def.reject(errorThrown);
@@ -202,7 +260,7 @@ define(["jquery", "ko-data/utils/deferred", "ko-data/object/Object", "ko-data/ty
 		}
 	});
 
-	return SocketsRepo;
+	return AjaxRepo;
 });
 
 
