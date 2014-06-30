@@ -2,7 +2,7 @@ define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	var output = function (T) {
 		var EntityType = Type.extend({
 			getInstance: function () {
-				return ko.observable(new T().valueOf());
+				return ko.observable(new T().valueOf()).extend({ dirtyCheck: true });
 			},
 			parse: function (data) {
 				var props = T.prototype.properties,

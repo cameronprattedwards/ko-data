@@ -1,7 +1,7 @@
 define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	var Dynamic = Type.extend({
 		getInstance: function () {
-			return ko.observable();
+			return ko.observable().extend({ dirtyCheck: true });
 		},
 		parse: function (input) {
 			return input;
