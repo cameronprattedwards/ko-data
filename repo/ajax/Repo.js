@@ -51,7 +51,8 @@ define(["jquery",
 			}
 		},
 		buildGraph: f.once(function () {
-			for (var x in props) {
+			var props;
+			for (var x in (props = this.entity.properties)) {
 				this.setRepo(props[x]);
 			}
 		}),
