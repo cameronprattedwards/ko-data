@@ -60,7 +60,8 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 					this[x](hash[x]);
 				}
 			}
-		}
+		},
+		uniqKey: "id"
 	};
 
 	// Create a new Entity that inherits from this entity
