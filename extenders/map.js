@@ -14,26 +14,38 @@ define(["knockout"], function (ko) {
 		targPush = target.push;
 		copyPush = copy.push;
 		copy.push = function () {
-			targPush.apply(target, arguments);
 			var args = Array.prototype.slice.call(arguments, 0).map(callback);
 			copyPush.apply(copy, args);
+		};
+
+		target.push = function () {
+			targPush.apply(target, arguments);
+			copy.push.apply(copy, arguments);
 		};
 
 		targUnshift = target.unshift;
 		copyUnshift = copy.unshift;
 		copy.unshift = function () {
-			targUnshift.apply(target, arguments);
 			var args = Array.prototype.slice.call(arguments, 0).map(callback);
 			copyUnshift.apply(target, args);
 		};
 
+		target.unshift = function () {
+			targUnshift.apply(target, arguments);
+			copy.unshift.apply(copy, arguments);
+		}
+
 		targSplice = target.splice;
 		copySplice = copy.splice;
 		copy.splice = function (index, length, replacements) {
-			targSplice.apply(target, arguments);
 			replacements = Array.prototype.slice.call(arguments, 2).map(callback);
 			copySplice.apply(copy, [index, length].concat(replacements));
 		};
+
+		target.splice = function () {
+			targSplice.apply(target, arguments);
+			copy.splice.apply(copy, arguments);
+		}
 
 		return copy;
 	}
