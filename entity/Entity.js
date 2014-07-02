@@ -22,6 +22,7 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 				this[x].isDirty.subscribe(function () {
 					_self.isDirty(true);
 				});
+				this[x].parent = this;
 			}
 
 			for (var x in hash) {
