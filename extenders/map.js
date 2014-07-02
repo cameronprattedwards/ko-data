@@ -22,7 +22,7 @@ define(["knockout"], function (ko) {
 		splice = target.splice;
 		target.splice = function (index, length, replacements) {
 			replacements = Array.prototype.slice.call(arguments, 2).map(callback);
-			splice.apply(target, [index, length].concat(args));
+			splice.apply(target, [index, length].concat(replacements));
 		};
 
 		return target;
