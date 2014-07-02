@@ -7,7 +7,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/
 					this.entityType = EntityType(T);
 			},
 			getInstance: function () {
-				return ko.observableArray().extend({ dirtyCheck: true });
+				return ko.observableArray().extend({ dirtyCheck: true }).extend({ duckPunch: true });
 			},
 			parse: function (input) {
 				var _self = this;
