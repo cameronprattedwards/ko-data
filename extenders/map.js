@@ -9,7 +9,7 @@ define(["knockout"], function (ko) {
 			copySplice,
 			copy = ko.observableArray(coll);
 
-		target.splice.apply(target, [0, target.length].concat(coll.map(callback)));
+		copy.splice.apply(copy, [0, coll.length].concat(coll.map(callback)));
 
 		targPush = target.push;
 		copyPush = copy.push;
@@ -35,6 +35,6 @@ define(["knockout"], function (ko) {
 			copySplice.apply(copy, [index, length].concat(replacements));
 		};
 
-		return target;
+		return copy;
 	}
 });
