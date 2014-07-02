@@ -4,7 +4,8 @@ define(["jquery",
 	"ko-data/type/Morpheus", 
 	"knockout", 
 	"ko-data/utils/stackedPromise",
-	"ko-data/utils/function"], function ($, deferred, ExtensibleObject, Morpheus, ko, stackedPromise, f) {
+	"ko-data/utils/function",
+	"ko-data/extenders/map"], function ($, deferred, ExtensibleObject, Morpheus, ko, stackedPromise, f) {
 	var AjaxRepo = ExtensibleObject.extend({
 		dataType: "json",
 		baseUrl: "",
