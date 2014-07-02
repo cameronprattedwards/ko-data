@@ -7,7 +7,7 @@ define(["knockout"], function (ko) {
 			copyPush,
 			copyUnshift,
 			copySplice,
-			copy = ko.observableArray(coll);
+			copy = ko.observableArray(coll.slice(0));
 
 		copy.splice.apply(copy, [0, coll.length].concat(coll.map(callback)));
 
