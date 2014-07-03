@@ -28,6 +28,35 @@ define(["ko-data/type/Boolean", "knockout"], function (Boolean, ko) {
 					var instance2 = boolType.getInstance();
 					expect(instance.isDirty()).toBe(true);
 				});
+
+				it("has an errors array", function () {
+					var instance = boolType.getInstance();
+					expect(ko.isObservable(instance.errors)).toBe(true);
+					expect(instance.errors() instanceof Array).toBe(true);
+				});
+
+				describe("#validate", function () {
+					var instance = boolType.getInstance();
+
+					it("recognizes a non-boolean value", function () {
+						instance("string");
+						expect(instance.validate()).toBe(false);
+
+						instance(true);
+						expect(instance.validate()).toBe(true);
+					});
+
+					it("adds errors to .errors", function () {
+						instance("string");
+						instance.validate();
+						expect(instance.errors().length).toBe(1);
+						expect(instance.errors()[0]).toBe("type of value must be boolean");
+
+						instance(false);
+						instance.validate();
+						expect(instance.errors().length).toBe(0);
+					});
+				});
 			});
 		});
 
