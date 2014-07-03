@@ -81,6 +81,9 @@ define([], function () {
 			};
 
 			this.resolve = function () {
+				if (state == "resolved" || state == "rejected")
+					return this;
+
 				callback = false;
 				state = "resolved";
 				fire.apply(this, [success].concat(toArray(arguments)));
@@ -89,6 +92,9 @@ define([], function () {
 			};
 
 			this.reject = function () {
+				if (state == "resolved" || state == "rejected")
+					return this;
+
 				callback = false;
 				state = "rejected";
 				fire.apply(this, [fail].concat(toArray(arguments)));
