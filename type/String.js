@@ -3,6 +3,11 @@ define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 		value: "",
 		parse: function (input) {
 			return input ? input.toString() : "";
+		},
+		validate: function (target) {
+			if (typeof target() !== "string") {
+				target.errors.push("type of value must be string");
+			}
 		}
 	});
 
@@ -14,6 +19,7 @@ define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	output.getInstance = String.prototype.getInstance;
 	output.parse = String.prototype.parse;
 	output.serialize = String.prototype.serialize;
+	output.validate = String.prototype.validate;
 
 	return output;
 });

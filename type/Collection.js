@@ -7,7 +7,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/
 					this.entityType = EntityType(T);
 			},
 			getInstance: function () {
-				return ko.observableArray().extend({ dirtyCheck: true }).extend({ duckPunch: true });
+				return ko.observableArray().extend({ dirtyCheck: true, duckPunch: true, validate: this.validate });
 			},
 			parse: function (input) {
 				var _self = this;
@@ -36,6 +36,13 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/
 				} else {
 					return input;
 				}
+			},
+			validate: function (target) {
+				for (var i = 0; i < target().length; i++) {
+					if (!(target()[i] instanceof T)) {
+						target.errors.push("value " + i + " must be an instance of generic Entity");
+					}
+				}
 			}
 		});
 
@@ -46,6 +53,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/
 		output.getInstance = Collection.prototype.getInstance;
 		output.parse = Collection.prototype.parse;
 		output.serialize = Collection.prototype.serialize;
+		output.validate = Collection.prototype.validate;
 
 		return output;
 	};

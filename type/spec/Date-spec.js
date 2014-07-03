@@ -17,6 +17,37 @@ define(["ko-data/type/Date", "knockout"], function (DateType, ko) {
 			it("defaults to now", function () {
 				expect(new Date().getTime() - ko.utils.unwrapObservable(dateType.getInstance()).getTime()).toBeLessThan(100);
 			});
+
+			describe("return value", function () {
+				it("has an errors array", function () {
+					var instance = dateType.getInstance();
+					expect(ko.isObservable(instance.errors)).toBe(true);
+					expect(instance.errors() instanceof Array).toBe(true);
+				});
+
+				describe("#validate", function () {
+					var instance = dateType.getInstance();
+
+					it("recognizes a non-Date value", function () {
+						instance("string");
+						expect(instance.validate()).toBe(false);
+
+						instance(new Date());
+						expect(instance.validate()).toBe(true);
+					});
+
+					it("adds errors to .errors", function () {
+						instance("string");
+						instance.validate();
+						expect(instance.errors().length).toBe(1);
+						expect(instance.errors()[0]).toBe("value must be an instance of Date");
+
+						instance(new Date());
+						instance.validate();
+						expect(instance.errors().length).toBe(0);
+					});
+				});				
+			});			
 		});
 
 		it("is configurable", function () {

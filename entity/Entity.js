@@ -36,6 +36,7 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 			this.isLoading = ko.observable(false);
 			this.isDirty = ko.observable(false);
 			this.isNew = ko.observable(Morpheus.markNew);
+			this.errors = ko.observableArray();
 			Morpheus.markDirty = oldVal;
 
 			if (this.uniqKey && (!hash || !hash[this.uniqKey])) {
@@ -46,6 +47,9 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 					_self.instances[value] = _self;
 				});
 			}
+		},
+		validate: function () {
+			return true;
 		},
 		markClean: function () {
 			for (var x in this.properties) {

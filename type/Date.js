@@ -7,10 +7,15 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 			return new Date(Date.parse(input));
 		},
 		getInstance: function () {
-			return ko.observable(new Date()).extend({ dirtyCheck: true });
+			return ko.observable(new Date()).extend({ dirtyCheck: true, validate: this.validate });
 		},
 		serialize: function (input) {
 			return input.toISOString();
+		},
+		validate: function (target) {
+			if (!(target() instanceof Date)) {
+				target.errors.push("value must be an instance of Date");
+			}
 		}
 	});
 
@@ -22,6 +27,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 	output.getInstance = DateType.prototype.getInstance;
 	output.parse = DateType.prototype.parse;
 	output.serialize = DateType.prototype.serialize;
+	output.validate = DateType.prototype.validate;
 
 	return output;
 });
