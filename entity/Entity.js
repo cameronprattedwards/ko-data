@@ -129,7 +129,7 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 						if (Morpheus.markDirty || !instance.isDirty())
 							instance.set(hash);
 						return instance;
-					} else {
+					} else if (typeof hash[this.uniqKey] !== "undefined") {
 						this.instances[hash[this.uniqKey]] = this;
 					}
 				}

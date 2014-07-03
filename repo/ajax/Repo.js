@@ -6,6 +6,25 @@ define(["jquery",
 	"ko-data/utils/stackedPromise",
 	"ko-data/utils/function",
 	"ko-data/extenders/map"], function ($, deferred, ExtensibleObject, Morpheus, ko, stackedPromise, f) {
+	function DataSet(filters) {
+		this.filters = [];
+		this.collection = ko.observableArray();
+	};
+
+	DataSet.prototype = {
+		check: function (entity) {
+			return this.collection.indexOf(entity) == -1 && this.filters.every(function (filter) {
+				return entity[filter.field]() == filter.comparator;
+			});
+		},
+		checkCollection: function (collection) {
+			var _self = this;
+			return collection.filter(function (obj) {
+				return _self.check(obj);
+			});
+		}
+	};
+
 	var AjaxRepo = ExtensibleObject.extend({
 		dataType: "json",
 		baseUrl: "",
@@ -18,6 +37,7 @@ define(["jquery",
 		init: function () {
 			this.staging = [];
 			this.graph = {};
+			this.dataSets = [];
 		},
 		payloadParser: function (payload) {
 			return payload;
@@ -60,13 +80,16 @@ define(["jquery",
 		save: function (parentId) {
 			var entity,
 				promises = [],
-				_self = this;
+				_self = this,
+				output = deferred();
 
 			this.buildGraph();
 
 			this.staging.forEach(function (entity) {
-				if ((!entity.isNew() && !entity.isDirty()) || !entity.validate())
+				if ((!entity.isNew() && !entity.isDirty()))
 					return;
+				if (!entity.validate())
+					return output.reject();
 
 				var method = entity.isNew() ? "POST" : "PUT",
 					def = deferred(),
@@ -141,7 +164,9 @@ define(["jquery",
 			});
 
 			var stacked = stackedPromise(promises);
-			return stacked;
+			stacked.done(output.resolve);
+			stacked.fail(output.reject);
+			return output.promise();
 		},
 		where: function () {
 			var params = {},
