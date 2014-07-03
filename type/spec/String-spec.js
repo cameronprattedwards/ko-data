@@ -16,6 +16,37 @@ define(["ko-data/type/String", "knockout"], function (String, ko) {
 			it("defaults to false", function () {
 				expect(ko.utils.unwrapObservable(stringType.getInstance())).toBe("");
 			});
+
+			describe("return value", function () {
+				it("has an errors array", function () {
+					var instance = stringType.getInstance();
+					expect(ko.isObservable(instance.errors)).toBe(true);
+					expect(instance.errors() instanceof Array).toBe(true);
+				});
+
+				describe("#validate", function () {
+					var instance = stringType.getInstance();
+
+					it("recognizes a non-string value", function () {
+						instance(false);
+						expect(instance.validate()).toBe(false);
+
+						instance("string");
+						expect(instance.validate()).toBe(true);
+					});
+
+					it("adds errors to .errors", function () {
+						instance(20);
+						instance.validate();
+						expect(instance.errors().length).toBe(1);
+						expect(instance.errors()[0]).toBe("type of value must be string");
+
+						instance("string");
+						instance.validate();
+						expect(instance.errors().length).toBe(0);
+					});
+				});
+			});
 		});
 
 		it("is configurable", function () {
