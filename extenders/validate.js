@@ -5,11 +5,15 @@ define(["knockout"], function (ko) {
 		target.validate = function () {
 			target.errors.removeAll();
 			callback.call(target, target);
+			target.validated(true);
 			return target.valid();
 		}
 
+		target.validated = ko.observable(false);
+
 		target.valid = ko.computed(function () {
-			return target.errors().length == 0;
+			if (target.validated())
+				return target.errors().length == 0;
 		});
 
 		return target;
