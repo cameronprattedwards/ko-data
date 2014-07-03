@@ -65,7 +65,7 @@ define(["jquery",
 			this.buildGraph();
 
 			this.staging.forEach(function (entity) {
-				if (!entity.isNew() && !entity.isDirty())
+				if ((!entity.isNew() && !entity.isDirty()) || !entity.validate())
 					return;
 
 				var method = entity.isNew() ? "POST" : "PUT",

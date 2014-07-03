@@ -90,7 +90,7 @@ define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko
 			var _self = this;
 
 			this.staging.forEach(function (entity) {
-				if (!entity.isNew() && !entity.isDirty())
+				if (!entity.validate() || (!entity.isNew() && !entity.isDirty()))
 					return;
 
 				var params = {};
