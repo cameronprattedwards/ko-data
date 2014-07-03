@@ -49,7 +49,15 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 			}
 		},
 		validate: function () {
-			return true;
+			var output = true;
+			this.errors.removeAll();
+			for (var x in this.properties) {
+				if (!this[x].validate()) {
+					this.errors.push.apply(this.errors, this[x].errors());
+					output = false;
+				}
+			}
+			return output;
 		},
 		markClean: function () {
 			for (var x in this.properties) {
