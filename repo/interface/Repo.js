@@ -1,4 +1,4 @@
-define(["ko-data/object/Object", "ko-data/utils/deferred"], function (Object, deferred) {
+define(["ko-data/object/Object", "ko-data/utils/deferred", "ko-data/extenders/map"], function (Object, deferred) {
 	return Object.extend({
 		init: function () {
 			this.instances = [];

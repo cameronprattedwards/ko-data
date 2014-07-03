@@ -1,4 +1,4 @@
-define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko-data/type/Morpheus"], function (ExtensibleObject, ko, io, deferred, Morpheus) {
+define(["ko-data/object/Object", "knockout", "io", "ko-data/utils/deferred", "ko-data/type/Morpheus", "ko-data/extenders/map"], function (ExtensibleObject, ko, io, deferred, Morpheus) {
 	function DataSet(filters) {
 		this.filters = [];
 		this.collection = ko.observableArray();

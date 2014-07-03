@@ -13,13 +13,16 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 	Entity.prototype = {
 		properties: {},
 		init: function (hash) {
-			var _self = this;
+			var _self = this,
+				oldVal = Morpheus.markDirty;
+
 			Morpheus.markDirty = false;
 			for (var x in this.properties) {
 				this[x] = this.properties[x].getInstance();
 				this[x].isDirty.subscribe(function () {
 					_self.isDirty(true);
 				});
+				this[x].parent = this;
 			}
 
 			for (var x in hash) {
@@ -33,7 +36,7 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 			this.isLoading = ko.observable(false);
 			this.isDirty = ko.observable(false);
 			this.isNew = ko.observable(Morpheus.markNew);
-			Morpheus.markDirty = true;
+			Morpheus.markDirty = oldVal;
 
 			if (this.uniqKey && (!hash || !hash[this.uniqKey])) {
 				this[this.uniqKey].subscribe(function (value) {
@@ -57,7 +60,8 @@ define(["knockout", "ko-data/type/Morpheus"], function (ko, Morpheus) {
 					this[x](hash[x]);
 				}
 			}
-		}
+		},
+		uniqKey: "id"
 	};
 
 	// Create a new Entity that inherits from this entity
