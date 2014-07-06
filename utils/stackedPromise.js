@@ -3,10 +3,11 @@ define(["ko-data/utils/deferred"], function (deferred) {
 		function StackedPromise(promises) {
 			var successes = 0,
 				failures = 0,
-				_self = this;
+				_self = this,
+				args;
 
 			function fire() {
-				return failures ? this.reject() : this.resolve();
+				return failures ? this.reject.apply(this, args) : this.resolve();
 			}
 
 			function check() {
@@ -17,7 +18,7 @@ define(["ko-data/utils/deferred"], function (deferred) {
 			for (var i = 0; i < promises.length; i++) {
 				promises[i]
 					.done(function () { successes++; })
-					.fail(function () { failures++; })
+					.fail(function () { failures++; args = arguments; })
 					.always(function () { check.call(_self); });
 			}
 
