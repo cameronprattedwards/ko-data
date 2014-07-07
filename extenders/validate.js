@@ -1,12 +1,13 @@
-define(["knockout"], function (ko) {
+define(["knockout", "ko-data/utils/deferred"], function (ko, deferred) {
 	ko.extenders.validate = function (target, callback) {
 		target.errors = ko.observableArray();
 
 		target.validate = function () {
 			target.errors.removeAll();
-			callback.call(target, target);
+			var output = callback.call(target, target) || deferred().resolve(target.valid()).promise();
 			target.validated(true);
-			return target.valid();
+
+			return output;
 		}
 
 		target.validated = ko.observable(false);
