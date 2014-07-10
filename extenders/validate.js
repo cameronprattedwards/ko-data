@@ -17,6 +17,10 @@ define(["knockout", "ko-data/utils/deferred"], function (ko, deferred) {
 				return target.errors().length == 0;
 		});
 
+		target.notValid = ko.computed(function () {
+			return target.valid() === false;
+		});
+
 		return target;
 	}
 });
