@@ -1,6 +1,6 @@
 define([], function () {
 	function Builder(field) {
-		this.field
+		this.field = field;
 	}
 
 	Builder.prototype = {
