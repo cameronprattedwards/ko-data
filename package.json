@@ -1,6 +1,6 @@
 {
   "name": "ko-data",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Domain and Persistence tools for your Knockout app",
   "main": "config.js",
   "scripts": {
