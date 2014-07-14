@@ -1,4 +1,4 @@
-define(["knockout", "ko-data/type/Type"], function (ko, Type) {
+define(["knockout", "ko-data/type/Type", "ko-data/type/makeTypeStatic"], function (ko, Type, makeTypeStatic) {
 	var String = Type.extend({
 		value: "",
 		parse: function (input) {
@@ -16,10 +16,7 @@ define(["knockout", "ko-data/type/Type"], function (ko, Type) {
 	}
 
 	output.value = "";
-	output.getInstance = String.prototype.getInstance;
-	output.parse = String.prototype.parse;
-	output.serialize = String.prototype.serialize;
-	output.validate = String.prototype.validate;
+	makeTypeStatic(String, output);
 
 	return output;
 });

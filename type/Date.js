@@ -1,4 +1,4 @@
-define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (ko, Type) {
+define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck", "ko-data/type/makeTypeStatic"], function (ko, Type, makeTypeStatic) {
 	var date = new Date();
 
 	var DateType = Type.extend({
@@ -16,6 +16,9 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 			if (!(target() instanceof Date)) {
 				target.errors.push("value must be an instance of Date");
 			}
+		},
+		mongoSerialize: function (input) {
+			return input;
 		}
 	});
 
@@ -24,10 +27,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/dirtyCheck"], function (k
 	}
 
 	output.value = date;
-	output.getInstance = DateType.prototype.getInstance;
-	output.parse = DateType.prototype.parse;
-	output.serialize = DateType.prototype.serialize;
-	output.validate = DateType.prototype.validate;
+	makeTypeStatic(DateType, output);
 
 	return output;
 });

@@ -1,4 +1,4 @@
-define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck", "ko-data/extenders/validate"], function (Object, ko) {
+define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck", "ko-data/extenders/validate", "ko-data/type/makeTypeStatic"], function (Object, ko, makeTypeStatic) {
 	var Type = Object.extend({
 		init: function (options) {
 			for (var x in options) {
@@ -14,14 +14,13 @@ define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck", "ko-data
 		serialize: function (value) {
 			return value;
 		},
-		validate: function (target) {
+		validate: function (target) {},
+		mongoSerialize: function () {
+			return this.serialize.apply(this, arguments);
 		}
 	});
 
-	Type.getInstance = Type.prototype.getInstance;
-	Type.parse = Type.prototype.parse;
-	Type.serialize = Type.prototype.serialize;
-	Type.validate = Type.prototype.validate;
+	makeTypeStatic(Type, Type);
 
 	return Type;
 });

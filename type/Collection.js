@@ -1,4 +1,4 @@
-define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/Entity"], function (ko, Type, EntityType, Entity) {
+define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/Entity", "ko-data/type/makeTypeStatic"], function (ko, Type, EntityType, Entity, makeTypeStatic) {
 	function output(T) {
 		var Collection = Type.extend({
 			init: function () {
@@ -50,10 +50,7 @@ define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/
 			return new Collection(options);
 		};
 
-		output.getInstance = Collection.prototype.getInstance;
-		output.parse = Collection.prototype.parse;
-		output.serialize = Collection.prototype.serialize;
-		output.validate = Collection.prototype.validate;
+		makeTypeStatic(Collection, output);
 
 		return output;
 	};
