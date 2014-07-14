@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["knockout", "ko-data/utils/deferred"], function (ko, deferred) {
 	ko.extenders.validate = function (target, callback) {
 		target.errors = ko.observableArray();

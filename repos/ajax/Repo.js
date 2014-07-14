@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["jquery", 
 	"ko-data/utils/deferred", 
 	"ko-data/object/Object", 

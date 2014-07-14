@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["knockout", "ko-data/type/Type", "ko-data/type/Entity", "ko-data/entity/Entity", "ko-data/type/makeTypeStatic"], function (ko, Type, EntityType, Entity, makeTypeStatic) {
 	function output(T) {
 		var Collection = Type.extend({

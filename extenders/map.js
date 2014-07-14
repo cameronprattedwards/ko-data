@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["knockout"], function (ko) {
 	ko.extenders.map = function (target, callback) {
 		var coll = target(),

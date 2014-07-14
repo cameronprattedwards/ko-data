@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["ko-data/object/Object", "ko-data/utils/deferred", "ko-data/extenders/map"], function (Object, deferred) {
 	return Object.extend({
 		init: function () {

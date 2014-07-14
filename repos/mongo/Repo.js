@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["ko-data/object/Object", "knockout", "mongojs", "ko-data/utils/deferred", "ko-data/type/Morpheus"], function (ExtensibleObject, ko, mongojs, deferred, Morpheus) {
 	var Repo = ExtensibleObject.extend({
 		entityName: "object",

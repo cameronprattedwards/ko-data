@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["ko-data/entity/Entity"], function (Entity) {
 	var changers = [
 		"push",

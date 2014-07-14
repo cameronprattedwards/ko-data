@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["ko-data/utils/deferred"], function (deferred) {
 	return function (promises) {
 		function StackedPromise(promises) {

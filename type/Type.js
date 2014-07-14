@@ -1,3 +1,7 @@
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define(["ko-data/object/Object", "knockout", "ko-data/type/dirtyCheck", "ko-data/extenders/validate", "ko-data/type/makeTypeStatic"], function (Object, ko, makeTypeStatic) {
 	var Type = Object.extend({
 		init: function (options) {
