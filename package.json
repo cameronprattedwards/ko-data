@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/cameronprattedwards/ko-data",
   "devDependencies": {
-    "mongojs": "~0.13.0"
+    "mongojs": "~0.13.0",
+    "amdefine": "~0.1.0"
   }
 }
