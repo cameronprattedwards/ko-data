@@ -1,0 +1,26 @@
+{
+  "name": "ko-data",
+  "version": "0.0.0",
+  "description": "Domain and Persistence tools for your Knockout app",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cameronprattedwards/ko-data.git"
+  },
+  "keywords": [
+    "ddd",
+    "domain",
+    "persistence",
+    "entity",
+    "repository"
+  ],
+  "author": "Cameron Edwards",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cameronprattedwards/ko-data/issues"
+  },
+  "homepage": "https://github.com/cameronprattedwards/ko-data"
+}
